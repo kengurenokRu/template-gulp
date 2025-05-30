@@ -22,7 +22,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
 import gcmq from 'gulp-group-css-media-queries';
-//import { stream as critical } from 'critical';
+import { stream as critical } from 'critical';
 
 // js
 import terser from 'gulp-terser';
@@ -56,7 +56,7 @@ const path = {
     js: 'src/js/index.js',
     img: 'src/img/**/*.*',
     svg: 'src/svg/**/*.svg',
-    imgF: 'src/img/**/*.{jpg,jpeg,png}',
+    imgF: 'src/img/**/*.{jpg,jpeg,jfif,png}',
     assets: [
       'src/fonts/**/*.*',
       'src/icons/**/*.*',
@@ -71,7 +71,7 @@ const path = {
     css: 'src/**/*.scss',
     svg: 'src/svg/**/*.svg',
     img: 'src/img/**/*.*',
-    imgF: 'src/img/**/*.{jpg,jpeg,png}',
+    imgF: 'src/img/**/*.{jpg,jpeg,jfif,png}',
   },
 };
 
@@ -279,7 +279,7 @@ export const avif = () =>
         once: true,
       }),
     );
-/*
+
 export const critCSS = () =>
   gulp
     .src(path.src.html)
@@ -294,7 +294,7 @@ export const critCSS = () =>
       console.error(err.message);
     })
     .pipe(gulp.dest(path.dist.base));
-*/
+
 export const copy = () =>
   gulp
     .src(path.src.assets, {
@@ -343,6 +343,6 @@ const develop = (ready) => {
 
 export const base = gulp.parallel(html, scss, js, img, svg, webp, avif, copy);
 
-export const build = gulp.series(clear, base/*, critCSS*/);
+export const build = gulp.series(clear, base, critCSS);
 
 export default gulp.series(develop, base, server);
